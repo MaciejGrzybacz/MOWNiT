@@ -1,0 +1,451 @@
+\documentclass[10pt]{article}
+\usepackage[polish]{babel}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{stmaryrd}
+\usepackage{bbold}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\graphicspath{ {./images/} }
+\usepackage{hyperref}
+\hypersetup{colorlinks=true, linkcolor=blue, filecolor=magenta, urlcolor=cyan,}
+\urlstyle{same}
+\begin{document}
+\title{Metody odtwarzania jakości zdjęć }
+
+
+\author{Maciej Grzybacz \\ Michał Hemperek}
+\date{11.05.2024}
+
+
+
+\maketitle
+\section*{Wstęp}
+Algorytmy odtwarzania jakości zdjęć, znane również jako algorytmy super-\\rozdzielczości, odgrywają kluczową rolę w dziedzinie przetwarzania obrazów cyfrowych. Ich podstawowym zadaniem jest przekształcanie obrazów o niskiej rozdzielczości (LR) w obrazy o wysokiej rozdzielczości (HR). Ta technologia ma znaczące zastosowania w medycynie, gdzie ulepszona jakość obrazu może przyczynić się do dokładniejszej diagnostyki i lepszego monitorowania pacjentów, w bezpieczeństwie, gdzie wysoka rozdzielczość może poprawić rozpoznawanie twarzy i identyfikację obiektów, w prztwarzaniu i analizie danych satelitarnych, gdzie dokładniejsze obrazy z satelitów pomagają w analizie zmian środowiskowych, oraz w rozrywce, gdzie lepsza jakość obrazu zwiększa satysfakcję widza.
+
+Algorytmy te stosują różnorodne techniki matematyczne i obliczeniowe, aby poprawić szczegóły i jakość obrazów. Proces ten obejmuje zaawansowane metody takie jak uczenie maszynowe, analizę statystyczną i algorytmy przetwarzania sygnału, które są kluczowe do efektywnego zwiększania rozdzielczości obrazów. W ciągu ostatnich lat, dzięki postępom w dziedzinie sztucznej inteligencji, zastosowanie głębokich sieci neuronowych do zadania super-rozdzielczości przyniosło znaczące usprawnienia. Te metody nie tylko polepszają jakość wizualną obrazów, ale również zredukować mogą ilość szumów i zniekształceń, co jest nieocenione w wielu zastosowaniach profesjonalnych.
+
+Jednakże, pomimo licznych zalet, algorytmy odtwarzania jakości zdjęć stawiają przed badaczami i inżynierami szereg wyzwań, takich jak potrzeba efektywnego przetwarzania dużych ilości danych, minimalizacja opóźnień obliczeniowych oraz zapewnienie odpowiedniej jakości rekonstrukcji przy różnych typach danych wejściowych. Odpowiedzią na te problemy są ciągłe badania nad nowymi modelami sieci neuronowych, które mogą efektywniej radzić sobie z rosnącymi wymaganiami dzisiejszych aplikacji. Dzięki temu, algorytmy te nieustannie ewoluują, oferując coraz to lepsze narzędzia do przetwarzania obrazów w wielu kluczowych sektorach.
+
+\section*{Podstawy Teoretyczne}
+Odtwarzanie jakości zdjęć opiera się na skomplikowanych procesach matematycznych i obliczeniowych, które umożliwiają mapowanie z przestrzeni obrazów o niskiej rozdzielczości (LR) do przestrzeni obrazów o wysokiej rozdzielczości (HR). Proces ten zwykle obejmuje kilka kluczowych technik, takich jak interpolacja, zwiększanie ostrości, redukcja szumów oraz zaawansowane techniki uczenia maszynowego, które są zaprojektowane, aby maksymalnie zwiększyć jakość finalnego obrazu HR.
+
+\subsection*{Interpolacja}
+Interpolacja to podstawowa technika stosowana w procesie zwiększania rozdzielczości obrazu. Techniki interpolacyjne, takie jak interpolacja najbliższego sąsiada, dwuliniowa oraz dwusześcienna, są powszechnie stosowane do estymacji wartości pikseli w obrazie HR na podstawie dostępnych pikseli w obrazie LR. Te metody, choć proste, często prowadzą do zauważalnego rozmycia obrazu, szczególnie wokół krawędzi i detali.
+
+\subsection*{Zwiększanie ostrości}
+Zwiększanie ostrości jest realizowane za pomocą technik takich jak wyostrzanie maski czy unsharp masking, które mają na celu poprawę percepcji detali i krawędzi w obrazie. Te metody zwiększają kontrast lokalny wokół krawędzi, co sprawia, że obrazy wydają się bardziej ostre i wyraźne dla ludzkiego oka.
+
+\subsection*{Redukcja szumów}
+Redukcja szumów jest niezbędna, gdyż procesy interpolacji i zwiększania ostrości często potęgują szumy obecne w obrazach LR. Techniki takie jak filtracja medianowa, filtracja Wienera czy nowoczesne metody oparte na uczeniu maszynowym są wykorzystywane do zmniejszenia szumów przy jednoczesnym zachowaniu ważnych detali obrazu.
+
+\subsection*{Zaawansowane techniki uczenia maszynowego}
+W ostatnich latach znaczący wpływ na rozwój technologii odtwarzania jakości zdjęć miały zaawansowane techniki uczenia maszynowego, zwłaszcza metody oparte na głębokich sieciach neuronowych. Sieci takie jak konwolucyjne sieci neuronowe (CNN), sieci resztowe (ResNets) czy generatywne sieci antagonistyczne (GANs) umożliwiają skuteczniejsze niż tradycyjne metody modelowanie złożonych zależności między obrazami LR i HR. Dzięki temu możliwe jest generowanie obrazów o wysokiej jakości, które są zarówno estetycznie przyjemne, jak i użyteczne w praktycznych zastosowaniach.
+
+Te zaawansowane metody nie tylko poprawiają jakość wizualną obrazów, ale również oferują nowe możliwości w dziedzinach wymagających szczegółowej analizy wizualnej, takich jak diagnostyka medyczna, teledetekcja czy inteligentne systemy monitorowania. Zastosowanie głębokich sieci neuronowych do zadań odtwarzania jakości zdjęć otwiera nowe horyzonty dla badań i rozwoju w dziedzinie przetwarzania obrazów, przynosząc istotne korzyści zarówno naukowe, jak i społeczne.
+
+\section*{Opisy Wybranych Algorytmów}
+\subsection*{Interpolacja Dwuliniowa}
+Interpolacja dwuliniowa jest jedną z podstawowych technik interpolacji stosowanych w przetwarzaniu obrazów do odtwarzania wyższych rozdzielczości. Technika ta stosuje proste obliczenia liniowe do estymacji wartości pikseli w obrazie o wysokiej rozdzielczości (HR) na podstawie znanych wartości pikseli w obrazie o niskiej rozdzielczości (LR). Interpolacja dwuliniowa jest szczególnie przydatna ze względu na swoją prostotę i stosunkowo niskie koszty obliczeniowe, co czyni ją popularnym wyborem w wielu zastosowaniach.
+
+W interpolacji dwuliniowej, wartość piksela w obrazie HR jest obliczana jako ważona średnia czterech najbliższych pikseli w obrazie LR, które otaczają przewidywaną lokalizację piksela. Jeśli oznaczymy te cztery piksele jako \( f(a, c) \), \( f(a, d) \), \( f(b, c) \), i \( f(b, d) \), gdzie \( (a, b) \) i \( (c, d) \) są współrzędnymi x i y pikseli w obrazie LR, wówczas wartość piksela \( f(x, y) \) w obrazie HR można obliczyć za pomocą następującego wzoru:
+
+\begin{align*}
+f(x, y) = & \, f(a, c) \cdot (b - x) \cdot (d - y) + f(a, d) \cdot (b - x) \cdot (y - c) \\
+          & + f(b, c) \cdot (x - a) \cdot (d - y) + f(b, d) \cdot (x - a) \cdot (y - c)
+\end{align*}
+
+W powyższym równaniu, wartości \( (x - a) \), \( (b - x) \), \( (y - c) \), i \( (d - y) \) reprezentują odległości pomiędzy szacowanym miejscem piksela w obrazie HR a rzeczywistymi lokalizacjami pikseli w obrazie LR, służąc jako wagi dla interpolowanych wartości pikseli.
+
+Interpolacja dwuliniowa jest skuteczna w łagodnych gradientach obrazu, ale może prowadzić do rozmycia krawędzi, szczególnie gdy są one oznaczone wysokim kontrastem. W rezultacie, choć technika ta jest efektywna i szybka, może nie być najlepszym wyborem w aplikacjach, które wymagają bardzo wysokiej jakości detali lub w przypadkach, gdzie zachowanie ostrości krawędzi jest krytyczne.
+
+\subsection*{Interpolacja Dwusześcienna (Bicubic)}
+Interpolacja dwusześcienna to zaawansowana technika interpolacji obrazu, która zapewnia znacznie wyższą jakość przybliżenia wartości pikseli w porównaniu do prostszych metod, takich jak interpolacja dwuliniowa. Używa ona wielomianów trzeciego stopnia, aby dokładniej oszacować wartości pikseli w obrazie o wysokiej rozdzielczości (HR) na podstawie danych z obrazu o niższej rozdzielczości (LR).
+
+Interpolacja dwusześcienna wykorzystuje 16 pikseli sąsiedztwa (w odróżnieniu od 4 w interpolacji dwuliniowej) do stworzenia bardziej gładkich gradientów i ostrzejszych krawędzi. Matematycznie, wartość piksela \( f(x, y) \) w obrazie HR obliczana jest za pomocą wzoru, który bierze pod uwagę nie tylko wartości najbliższych pikseli, ale również ich pochodne, co umożliwia lepsze dostosowanie do lokalnych zmian intensywności i koloru:
+
+\begin{align*}
+f(x, y) = & \, a_{00} + a_{01} \cdot y + a_{02} \cdot y^2 + a_{03} \cdot y^3 \\
+          & + a_{10} \cdot x + a_{11} \cdot x \cdot y + a_{12} \cdot x \cdot y^2 + a_{13} \cdot x \cdot y^3 \\
+          & + a_{20} \cdot x^2 + a_{21} \cdot x^2 \cdot y + a_{22} \cdot x^2 \cdot y^2 + a_{23} \cdot x^2 \cdot y^3 \\
+          & + a_{30} \cdot x^3 + a_{31} \cdot x^3 \cdot y + a_{32} \cdot x^3 \cdot y^2 + a_{33} \cdot x^3 \cdot y^3
+\end{align*}
+
+Współczynniki \( a_{ij} \) są wyliczane na podstawie wartości pikseli i ich pochodnych w sąsiedztwie punktu interpolacji. Dzięki temu interpolacja dwusześcienna jest w stanie efektywnie radzić sobie z wyzwaniami, jakie stawiają szczególnie złożone tekstury i detale obrazów.
+
+\subsection*{Very Deep Super-Resolution (VDSR)}
+
+Very Deep Super-Resolution (VDSR) to algorytm super-rozdzielczości wykorzystujący głębokie sieci resztowe (ResNets) do znacznej poprawy jakości obrazów o wysokiej rozdzielczości (HR) z obrazów o niskiej rozdzielczości (LR). VDSR wprowadza innowacje w dziedzinie super-rozdzielczości dzięki implementacji głębokiej architektury sieciowej, co przekłada się na dokładniejszą rekonstrukcję obrazów.
+
+\subsubsection*{Architektura VDSR}
+
+\begin{enumerate}
+    \item \textbf{Warstwa wejściowa:} Przyjmuje obraz o niskiej rozdzielczości (LR) jako wejście. Wymiary wejścia to \( H \times W \times C \), gdzie \( H \) to wysokość, \( W \) to szerokość, a \( C \) to liczba kanałów (np. 3 dla obrazu kolorowego RGB).
+
+    \item \textbf{Warstwy konwolucyjne:} VDSR składa się z od 20 do 50 warstw konwolucyjnych. Każda warstwa konwolucyjna ma następujące cechy:
+    \begin{itemize}
+        \item \textbf{Filtry konwolucyjne:} Każda warstwa posiada 64 filtry o rozmiarze \( 3 \times 3 \).
+        \item \textbf{Funkcja aktywacji:} Po każdej warstwie konwolucyjnej stosowana jest funkcja aktywacji ReLU (Rectified Linear Unit), która wprowadza nieliniowość do modelu i pomaga w skuteczniejszym uczeniu się.
+        \item \textbf{Normalizacja wsadowa:} W wielu implementacjach stosuje się normalizację wsadową (Batch Normalization), aby przyspieszyć proces uczenia i stabilizować sieć.
+    \end{itemize}
+
+    \item \textbf{Technika uczenia resztowego:} VDSR wykorzystuje technikę uczenia resztowego, gdzie sieć uczy się reszt między obrazem LR a obrazem HR. Umożliwia to sieci efektywniejsze uczenie się różnic, co prowadzi do szybszej konwergencji i lepszych wyników.
+    
+    \item \textbf{Warstwa wyjściowa:} Finalna warstwa konwolucyjna, która rekonstruuje obraz o wysokiej rozdzielczości (HR) poprzez dodanie wyuczonych reszt do obrazu LR. Wyjście ma te same wymiary co wejście, \( H \times W \times C \).
+\end{enumerate}
+
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{vdsr_structure.png}
+    \caption{Struktura sieci VDSR}
+    \label{fig:vdsr_structure}
+\end{figure}
+
+\subsubsection*{Korzyści z użycia VDSR}
+
+\begin{itemize}
+    \item \textbf{Poprawa jakości obrazu:} Dzięki bardzo głębokim sieciom resztowym i technice uczenia resztowego, VDSR osiąga znaczną poprawę jakości obrazów, minimalizując typowe artefakty i błędy rekonstrukcji, takie jak zniekształcenia i halo wokół krawędzi.
+    \item \textbf{Uniwersalność:} Sieć VDSR jest zdolna do pracy z różnymi skalami powiększenia i typami obrazów, co czyni ją elastyczną i przydatną w różnorodnych zastosowaniach.
+    \item \textbf{Efektywność treningu:} Technika resztowa pozwala na szybsze i stabilniejsze trenowanie modelu, co jest istotne w zastosowaniach komercyjnych i naukowych, gdzie czas i zasoby są często ograniczone.
+\end{itemize}
+
+
+\subsection*{Enhanced Deep Super-Resolution Network (EDSR)}
+
+Enhanced Deep Super-Resolution Network (EDSR) stanowi ewolucję w dziedzinie algorytmów super-rozdzielczości, rozwijając koncepcje wprowadzone w modelu Very Deep Super-Resolution (VDSR). EDSR skutecznie eliminuje Batch Normalization, element wcześniej stosowany w wielu modelach sieci głębokich, co przekłada się na znaczne przyspieszenie procesu uczenia oraz poprawę jakości generowanych obrazów.
+
+\subsubsection*{Modyfikacje architektury w EDSR}
+
+\begin{itemize}
+    \item \textbf{Usuwanie Batch Normalization:} EDSR rezygnuje z warstw normalizacji wsadowej (Batch Normalization), które w VDSR były stosowane po każdej warstwie konwolucyjnej. Usunięcie tych warstw pozwala na redukcję redundancji obliczeniowej i pamięciowej, co jest kluczowe, szczególnie przy dużych rozmiarach wejściowych i głębokich sieciach. Ta zmiana skutkuje nie tylko szybszym uczeniem, ale również zwiększa skuteczność sieci, eliminując potencjalne problemy ze skalowaniem cech między różnymi warstwami.
+    \item \textbf{Zwiększona głębokość i szerokość sieci:} EDSR wykorzystuje większą liczbę warstw oraz szersze warstwy konwolucyjne w porównaniu do VDSR, co pozwala na bardziej szczegółowe modelowanie i lepszą rekonstrukcję obrazów o wysokiej rozdzielczości. Dzięki zastosowaniu głębszej i szerszej architektury, sieć jest w stanie wyłapywać bardziej złożone wzorce i detale w obrazach.
+\end{itemize}
+
+\subsubsection*{Warstwy sieci EDSR}
+
+\textbf{Warstwa Wejściowa}:
+\begin{itemize}
+    \item Przyjmuje obraz o niskiej rozdzielczości (LR) jako wejście. Wymiary wejścia to \( H \times W \times C \), gdzie \( H \) to wysokość, \( W \) to szerokość, a \( C \) to liczba kanałów (np. 3 dla obrazu kolorowego RGB).
+\end{itemize}
+
+\textbf{Warstwy Konwolucyjne}:
+\begin{itemize}
+    \item \textbf{Filtry konwolucyjne:} EDSR wykorzystuje wiele warstw konwolucyjnych, każda z 256 filtrami o rozmiarze \( 3 \times 3 \).
+    \item \textbf{Funkcja aktywacji:} Po każdej warstwie konwolucyjnej stosowana jest funkcja aktywacji ReLU (Rectified Linear Unit), która wprowadza nieliniowość do modelu i pomaga w skuteczniejszym uczeniu się.
+\end{itemize}
+
+\textbf{Bloki Resztkowe (Residual Blocks)}:
+\begin{itemize}
+    \item Każdy blok resztkowy składa się z dwóch warstw konwolucyjnych z 256 filtrami i funkcją aktywacji ReLU między nimi.
+    \item Brak warstw normalizacji wsadowej (Batch Normalization), co pozwala na redukcję redundancji obliczeniowej i pamięciowej.
+\end{itemize}
+
+\textbf{Warstwa Wyjściowa}:
+\begin{itemize}
+    \item Finalna warstwa konwolucyjna, która rekonstruuje obraz o wysokiej rozdzielczości (HR) poprzez dodanie wyuczonych reszt do obrazu LR. Wyjście ma te same wymiary co wejście, \( H \times W \times C \).
+\end{itemize}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{edsr_structure.png}
+    \caption{Struktura sieci EDSR}
+    \label{fig:edsr_structure}
+\end{figure}
+
+\subsubsection*{Korzyści z użycia EDSR}
+
+\begin{enumerate}
+    \item \textbf{Wyższa jakość obrazu:} Dzięki optymalizacjom w architekturze sieci, EDSR generuje obrazy o znacznie lepszej jakości, minimalizując typowe artefakty i zniekształcenia związane z procesem super-rozdzielczości. Model ten jest szczególnie skuteczny w odtwarzaniu tekstur, krawędzi i innych subtelnych detali, które są często utracone w mniej zaawansowanych metodach.
+    \item \textbf{Szybkość przetwarzania:} Usunięcie Batch Normalization znacząco przyspiesza obliczenia, co czyni EDSR idealnym rozwiązaniem dla aplikacji wymagających szybkiego przetwarzania obrazów, takich jak przetwarzanie wideo w czasie rzeczywistym lub aplikacje mobilne.
+    \item \textbf{Elastyczność i skalowalność:} EDSR, dzięki swojej adaptacyjnej architekturze, jest łatwo konfigurowalny pod kątem różnych wymagań dotyczących rozmiaru i jakości obrazu, co pozwala na szerokie zastosowanie w różnych dziedzinach.
+\end{enumerate}
+
+\subsection*{Deep Back-Projection Networks (DBPN)}
+
+Deep Back-Projection Networks (DBPN) to innowacyjny algorytm w dziedzinie super-rozdzielczości, który wykorzystuje technikę back-projection do iteracyjnego ulepszania jakości rekonstrukcji obrazów. DBPN odchodzi od konwencjonalnych metod super-rozdzielczości, które skupiają się głównie na jednokierunkowym przepływie danych (z LR do HR), wprowadzając mechanizm dwukierunkowego przepływu informacji.
+
+\subsubsection*{Mechanizm działania DBPN}
+
+\begin{enumerate}
+    \item \textbf{Iteracyjne ulepszanie:} W przeciwieństwie do tradycyjnych metod, DBPN stosuje serię iteracyjnych procesów back-projection, które skutecznie zwiększają szczegóły obrazu. Algorytm ten nie tylko przekształca obrazy LR na HR, ale również wykonuje odwrotną operację (z HR do LR), co umożliwia porównanie i korektę błędów na bieżąco.
+    \item \textbf{Back-projection:} Back-projection jest techniką wykorzystywaną w tomografii, ale adaptacja do super-rozdzielczości pozwala na dynamiczne dostosowanie obrazu HR poprzez analizowanie różnic między obrazem LR a obrazem odtworzonym z HR. To umożliwia precyzyjne dostrojenie detali i tekstur, które są kluczowe dla realizmu i jakości końcowego obrazu.
+    \item \textbf{Dwukierunkowy przepływ informacji:} DBPN unikalnie wykorzystuje dwukierunkowy przepływ danych, który pozwala na ciągłe ulepszanie i doprecyzowywanie struktury obrazu. Każda iteracja dostarcza dodatkowych informacji, które są wykorzystywane do poprawy i dokładniejszego odtworzenia obrazu HR.
+\end{enumerate}
+
+\subsubsection*{Schemat struktury DBPN}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{dbpn_structure.png}
+    \caption{Struktura sieci DBPN}
+    \label{fig:dbpn_structure}
+\end{figure}
+
+\subsubsection*{Korzyści z użycia DBPN}
+
+\begin{itemize}
+    \item \textbf{Wysoka jakość obrazu:} Dzięki iteracyjnym procesom i dwukierunkowemu przepływowi danych, DBPN jest w stanie generować obrazy o znacznie wyższej jakości, z lepszym odwzorowaniem detali i mniejszą ilością artefaktów niż tradycyjne metody.
+    \item \textbf{Adaptacyjność:} Technika ta jest wysoce adaptacyjna do różnorodnych typów obrazów i różnych poziomów degradacji, co sprawia, że jest użyteczna w różnych aplikacjach, od medycznych po rozrywkowe.
+    \item \textbf{Efektywność uczenia:} Iteracyjny charakter i mechanizm korekty błędów na bieżąco czynią DBPN szczególnie efektywnym w środowiskach, gdzie dostępne są ograniczone zasoby danych uczących.
+\end{itemize}
+
+DBPN stanowi przełom w technologii super-rozdzielczości, demonstrując, jak zaawansowane techniki przetwarzania mogą skutecznie poprawiać jakość obrazów w sposób, który był nieosiągalny dla wcześniejszych metod.
+
+\subsection*{Residual Dense Network (RDN)}
+
+Residual Dense Network (RDN) to zaawansowany model w dziedzinie super-rozdzielczości, który łączy zalety uczenia resztowego z koncepcją gęstych połączeń. Dzięki tej kombinacji, RDN znacząco poprawia efektywność przekazywania cech w sieci, co przekłada się na lepszą jakość rekonstrukcji obrazów.
+
+\subsubsection*{Architektura RDN}
+
+\begin{enumerate}
+    \item \textbf{Gęste połączenia:} Główną cechą RDN są gęste połączenia między warstwami, które pozwalają na przekazywanie informacji nie tylko z poprzedniej warstwy bezpośrednio do następnej, ale każda warstwa otrzymuje jako wejście dane ze wszystkich poprzednich warstw. To zwiększa redundancję informacji w sieci, co jest kluczowe dla dokładniejszej rekonstrukcji obrazów.
+    \item \textbf{Bloki resztowe:} RDN wykorzystuje bloki resztowe, które pomagają w łatwiejszym i szybszym uczeniu sieci przez minimalizowanie problemów z zanikającymi gradientami, które często występują w bardzo głębokich sieciach. Każdy blok resztowy próbuje przewidzieć tylko resztę (różnicę) między wejściem a oczekiwanym wyjściem, co ułatwia sieci skupienie się na najtrudniejszych do nauczenia szczegółach.
+    \item \textbf{Warstwy przejściowe:} Do łączenia cech z różnych bloków resztowych, RDN stosuje specjalne warstwy przejściowe, które integrują cechy z różnych poziomów abstrakcji, co pozwala na bardziej kompleksową analizę danych wejściowych.
+\end{enumerate}
+
+\subsubsection*{Schemat struktury RDN}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{rdn_structure.png}
+    \caption{Struktura sieci RDN}
+    \label{fig:rdn_structure}
+\end{figure}
+
+\subsubsection*{Korzyści z użycia RDN}
+
+\begin{itemize}
+    \item \textbf{Wysoka jakość obrazu:} Dzięki efektywnemu przekazywaniu cech i zdolności do nauki skomplikowanych zależności między różnymi warstwami, RDN generuje obrazy o wysokiej jakości, z wyraźnie poprawionymi teksturami i szczegółami.
+    \item \textbf{Efektywność uczenia:} Gęste połączenia i bloki resztowe znacząco poprawiają proces uczenia sieci, umożliwiając szybszą i stabilniejszą konwergencję nawet dla bardzo głębokich architektur.
+    \item \textbf{Elastyczność:} Architektura RDN jest na tyle elastyczna, że może być dostosowana do różnych rozmiarów i typów danych wejściowych, co sprawia, że jest odpowiednia dla szerokiej gamy zastosowań, od poprawy jakości obrazów medycznych po ulepszanie obrazów wideo w czasie rzeczywistym.
+\end{itemize}
+
+RDN reprezentuje znaczący postęp w technologii super-rozdzielczości, oferując nie tylko wyższą jakość generowanych obrazów, ale także większą efektywność i elastyczność w różnorodnych zastosowaniach.
+\newpage
+\section*{Metryki Oceny Jakości Obrazu}
+
+W celu oceny jakości obrazów, planujemy wykorzystać następujące metryki oceny jakości obrazu:
+
+\subsection*{PSNR (Peak Signal-to-Noise Ratio)}
+
+PSNR to metryka oceny jakości obrazu, która oblicza stosunek sygnału do szumu między dwoma obrazami. PSNR jest powszechnie stosowana do określenia, jak dobrze obraz testowy odwzorowuje obraz referencyjny. Wyższa wartość PSNR wskazuje na lepszą jakość obrazu.
+
+Wzór na PSNR:
+\begin{equation}
+    \text{PSNR} = 10 \log_{10} \left( \frac{\text{MAX}^2}{\text{MSE}} \right)
+\end{equation}
+gdzie \(\text{MAX}\) jest maksymalną możliwą wartością piksela w obrazie (np. 255 dla obrazów 8-bitowych), a \(\text{MSE}\) to średni błąd kwadratowy (Mean Squared Error) między obrazem referencyjnym a obrazem testowym, obliczany jako:
+\begin{equation}
+    \text{MSE} = \frac{1}{mn} \sum_{i=1}^{m} \sum_{j=1}^{n} \left[ I_{\text{ref}}(i,j) - I_{\text{test}}(i,j) \right]^2
+\end{equation}
+gdzie \(I_{\text{ref}}\) i \(I_{\text{test}}\) to odpowiednio wartości pikseli w obrazie referencyjnym i testowym, a \(m\) i \(n\) to wymiary obrazów.
+
+\subsection*{SSIM (Structural Similarity Index)}
+
+SSIM to metryka oceny jakości obrazu, która oblicza podobieństwo strukturalne między dwoma obrazami. SSIM uwzględnia różnice w jasności, kontraście i strukturze, co pozwala na bardziej zgodną z ludzką percepcją ocenę jakości obrazu. SSIM jest obliczany na małych blokach obrazów i średnia z tych bloków daje końcowy wynik.
+
+Wzór na SSIM:
+\begin{equation}
+    \text{SSIM}(x, y) = \frac{(2\mu_x \mu_y + C_1)(2\sigma_{xy} + C_2)}{(\mu_x^2 + \mu_y^2 + C_1)(\sigma_x^2 + \sigma_y^2 + C_2)}
+\end{equation}
+gdzie:
+\begin{itemize}
+    \item \(\mu_x\) i \(\mu_y\) to średnie wartości pikseli w blokach \(x\) i \(y\),
+    \item \(\sigma_x^2\) i \(\sigma_y^2\) to wariancje w blokach \(x\) i \(y\),
+    \item \(\sigma_{xy}\) to kowariancja między blokami \(x\) i \(y\),
+    \item \(C_1\) i \(C_2\) to stałe stabilizujące, które zapobiegają dzieleniu przez zero.
+\end{itemize}
+
+\subsection*{MAE (Mean Absolute Error)}
+
+MAE to metryka oceny jakości obrazu, która oblicza średni błąd bezwzględny między dwoma obrazami. MAE jest stosowana do określenia, jak dobrze obraz testowy odwzorowuje obraz referencyjny pod względem wartości pikseli. Niższa wartość MAE oznacza lepszą jakość obrazu.
+
+Wzór na MAE:
+\begin{equation}
+    \text{MAE} = \frac{1}{mn} \sum_{i=1}^{m} \sum_{j=1}^{n} \left| I_{\text{ref}}(i,j) - I_{\text{test}}(i,j) \right|
+\end{equation}
+gdzie \(I_{\text{ref}}\) i \(I_{\text{test}}\) to odpowiednio wartości pikseli w obrazie referencyjnym i testowym, a \(m\) i \(n\) to wymiary obrazów.
+
+\newpage
+\section*{Propozycje Eksperymentów}
+
+Planujemy przeprowadzić następujące eksperymenty w celu porównania i oceny różnych metod poprawy jakości obrazów:
+
+\subsection*{Porównanie jakości obrazu}
+
+W ramach tego eksperymentu zamierzamy porównać jakość obrazów generowanych przez różne metody poprawy jakości obrazów. Będziemy analizować obrazy wygenerowane przez tradycyjne metody interpolacji (np. interpolacja dwuliniowa, interpolacja dwusześcienna) oraz zaawansowane algorytmy oparte na sieciach neuronowych (np. VDSR, EDSR, RDN). Jakość obrazów będziemy oceniać za pomocą metryk takich jak PSNR, SSIM i MAE, co pozwoli nam na obiektywne porównanie skuteczności poszczególnych metod.
+
+\subsection*{Analiza wydajności obliczeniowej}
+
+W tym eksperymencie skoncentrujemy się na ocenie czasu przetwarzania i wydajności obliczeniowej każdego algorytmu na tej samej platformie sprzętowej. Przeprowadzimy testy zarówno przy użyciu GPU (Graphics Processing Unit), jak i CPU (Central Processing Unit), aby zrozumieć, jak różne algorytmy radzą sobie z obciążeniami obliczeniowymi. Wyniki analizy wydajności pomogą w identyfikacji algorytmów, które są najbardziej efektywne pod względem czasu przetwarzania i wykorzystania zasobów sprzętowych.
+\newpage
+\section*{Zastosowania Algorytmów Poprawy Jakości Obrazów}
+
+Planujemy zająć się analizą zastosowań różnych algorytmów poprawy jakości obrazów, takich jak:
+
+\subsection*{Nvidia DLSS (Deep Learning Super Sampling)}
+
+Nvidia DLSS (Deep Learning Super Sampling) to zaawansowana technologia stosowana głównie w grach komputerowych, która wykorzystuje sieci neuronowe do generowania obrazów o wyższej rozdzielczości, jednocześnie zwiększając wydajność systemu.
+
+\subsubsection*{Technologia i Działanie}
+
+DLSS wykorzystuje głębokie sieci neuronowe, które są trenowane na superkomputerach, aby nauczyć się generować obrazy wysokiej jakości z niższej rozdzielczości wejściowej. Proces ten obejmuje następujące kroki:
+
+\begin{itemize}
+    \item \textbf{Trening na superkomputerach:} Sieci neuronowe są trenowane na obrazach wysokiej jakości, aby nauczyć się wzorców i detali, które są charakterystyczne dla obrazów o wysokiej rozdzielczości.
+    \item \textbf{Skalowanie i poprawa jakości:} Podczas rzeczywistego działania, DLSS przyjmuje obrazy o niższej rozdzielczości i generuje obrazy o wyższej rozdzielczości poprzez aplikację wyuczonych wzorców i detali.
+    \item \textbf{Zwiększenie wydajności:} Dzięki temu, że generowanie obrazów o wyższej rozdzielczości odbywa się na poziomie sieci neuronowych, proces ten jest bardziej wydajny niż tradycyjne metody skalowania, co pozwala na lepszą wydajność gier nawet przy wysokich ustawieniach graficznych.
+\end{itemize}
+
+\subsubsection*{Korzyści i Zastosowania}
+
+\begin{itemize}
+    \item \textbf{Zwiększona wydajność gier:} Gracze mogą cieszyć się lepszą jakością grafiki bez konieczności posiadania najnowszego sprzętu, co jest szczególnie ważne dla gier o wysokich wymaganiach graficznych.
+    \item \textbf{Lepsze doświadczenia wizualne:} DLSS pozwala na bardziej realistyczne i szczegółowe sceny w grach, co znacząco poprawia wrażenia z gry.
+    \item \textbf{Adaptacyjność:} Technologia ta może być dostosowana do różnych typów gier i środowisk, co czyni ją bardzo wszechstronną.
+\end{itemize}
+
+\subsection*{Analiza Obrazów Satelitarnych}
+
+Poprawa jakości obrazów satelitarnych ma kluczowe znaczenie w wielu dziedzinach, takich jak badania naukowe, nawigacja, wojskowość i wiele innych. Algorytmy poprawy jakości obrazów pomagają uzyskać bardziej szczegółowe i dokładne obrazy z danych satelitarnych.
+
+\subsubsection*{Technologia i Działanie}
+
+Algorytmy poprawy jakości obrazów satelitarnych często wykorzystują techniki super-rozdzielczości, które umożliwiają zwiększenie rozdzielczości obrazów oraz poprawę ich jakości poprzez redukcję szumów i artefaktów. Proces ten obejmuje:
+
+\begin{itemize}
+    \item \textbf{Redukcja szumów:} Usuwanie szumów z obrazów satelitarnych, które mogą być spowodowane przez atmosferyczne zakłócenia lub inne czynniki zewnętrzne.
+    \item \textbf{Zwiększenie rozdzielczości:} Użycie algorytmów super-rozdzielczości, takich jak VDSR, EDSR czy , do generowania obrazów o wyższej rozdzielczości.
+    \item \textbf{Poprawa kontrastu i ostrości:} Zwiększenie kontrastu i ostrości obrazów, co umożliwia lepszą identyfikację szczegółów na zdjęciach satelitarnych.
+\end{itemize}
+
+\subsubsection*{Korzyści i Zastosowania}
+
+\begin{itemize}
+    \item \textbf{Lepsza analiza terenu:} Dokładniejsze obrazy satelitarne pozwalają na bardziej szczegółową analizę terenu, co jest kluczowe w badaniach naukowych oraz w planowaniu infrastruktury.
+    \item \textbf{Nawigacja i mapowanie:} Poprawa jakości obrazów satelitarnych jest niezbędna dla systemów nawigacyjnych oraz w tworzeniu dokładnych map.
+    \item \textbf{Zastosowania militarne:} Wyraźniejsze i bardziej szczegółowe obrazy satelitarne są istotne dla operacji wojskowych, umożliwiając lepszą identyfikację i monitorowanie obiektów.
+\end{itemize}
+
+\subsection*{Poprawa Jakości Obrazów w Diagnostyce Medycznej}
+
+W dziedzinie medycyny, poprawa jakości obrazów jest wykorzystywana do uzyskiwania wyraźniejszych obrazów diagnostycznych z obrazowania medycznego, co umożliwia dokładniejsze diagnozy i leczenie.
+
+\subsubsection*{Technologia i Działanie}
+
+Algorytmy poprawy jakości obrazów medycznych często stosują techniki takie jak redukcja szumów, poprawa kontrastu oraz super-rozdzielczość, aby uzyskać obrazy o lepszej jakości. Proces ten obejmuje:
+
+\begin{itemize}
+    \item \textbf{Redukcja szumów:} Usuwanie szumów z obrazów medycznych, co jest szczególnie ważne w przypadku niskiej jakości obrazów MRI czy CT.
+    \item \textbf{Zwiększenie rozdzielczości:} Wykorzystanie algorytmów super-rozdzielczości do poprawy jakości obrazów, co pozwala na lepsze zobrazowanie struktur wewnętrznych ciała.
+    \item \textbf{Poprawa kontrastu:} Zwiększenie kontrastu obrazów, co umożliwia lepszą identyfikację różnych tkanek i struktur w ciele pacjenta.
+\end{itemize}
+
+\subsubsection*{Korzyści i Zastosowania}
+
+\begin{itemize}
+    \item \textbf{Dokładniejsze diagnozy:} Wyraźniejsze obrazy diagnostyczne pozwalają lekarzom na dokładniejsze diagnozy i lepsze planowanie leczenia.
+    \item \textbf{Wczesne wykrywanie chorób:} Poprawa jakości obrazów umożliwia wcześniejsze wykrywanie chorób, co zwiększa szanse na skuteczne leczenie.
+    \item \textbf{Redukcja potrzebnych badań:} Lepsza jakość obrazów może zmniejszyć liczbę potrzebnych badań diagnostycznych, co jest korzystne zarówno dla pacjentów, jak i dla systemów opieki zdrowotnej.
+\end{itemize}
+
+\subsection*{Analiza Obrazów CCTV}
+
+W dziedzinie bezpieczeństwa, poprawa jakości obrazów jest używana do poprawy jakości i szczegółowości obrazów z kamer monitoringu, co umożliwia lepszą identyfikację osób i obiektów.
+
+\subsubsection*{Technologia i Działanie}
+
+Algorytmy poprawy jakości obrazów CCTV obejmują techniki takie jak redukcja szumów, poprawa kontrastu oraz super-rozdzielczość, aby uzyskać obrazy o lepszej jakości. Proces ten obejmuje:
+
+\begin{itemize}
+    \item \textbf{Redukcja szumów:} Usuwanie szumów z obrazów CCTV, co jest istotne dla poprawy jakości obrazu w warunkach słabego oświetlenia.
+    \item \textbf{Zwiększenie rozdzielczości:} Wykorzystanie algorytmów super-rozdzielczości do poprawy jakości obrazów, co pozwala na lepsze rozpoznawanie twarzy i innych szczegółów.
+    \item \textbf{Poprawa kontrastu i ostrości:} Zwiększenie kontrastu i ostrości obrazów, co umożliwia lepszą identyfikację obiektów i osób.
+\end{itemize}
+
+\subsubsection*{Korzyści i Zastosowania}
+
+\begin{itemize}
+    \item \textbf{Lepsza identyfikacja:} Wyraźniejsze obrazy z kamer monitoringu pozwalają na lepszą identyfikację osób i obiektów, co jest kluczowe w działaniach policyjnych i śledczych.
+    \item \textbf{Zwiększone bezpieczeństwo:} Poprawa jakości obrazów CCTV przyczynia się do zwiększenia bezpieczeństwa publicznego, umożliwiając szybsze i bardziej precyzyjne reakcje na zagrożenia.
+    \item \textbf{Dowody sądowe:} Wyraźniejsze obrazy mogą służyć jako lepsze dowody w postępowaniach sądowych, zwiększając skuteczność systemu sprawiedliwości.
+\end{itemize}
+
+\subsection*{Zachowanie Dziedzictwa Kulturowego}
+
+W dziedzinie kultury i sztuki, poprawa jakości obrazów jest stosowana do przywracania i poprawiania jakości starych i zniszczonych obrazów, co pomaga w zachowaniu dziedzictwa kulturowego.
+
+\subsubsection*{Technologia i Działanie}
+
+Algorytmy poprawy jakości obrazów w tej dziedzinie często obejmują techniki takie jak usuwanie szumów, retuszowanie, zwiększanie rozdzielczości oraz poprawa kolorów. Proces ten obejmuje:
+
+\begin{itemize}
+    \item \textbf{Usuwanie szumów i artefaktów:} Algorytmy usuwają szumy i artefakty, które mogą pojawić się na starych, zniszczonych obrazach.
+    \item \textbf{Retuszowanie:} Automatyczne retuszowanie i naprawa uszkodzonych części obrazów, co pozwala na przywrócenie ich pierwotnego wyglądu.
+    \item \textbf{Zwiększenie rozdzielczości:} Użycie technik super-rozdzielczości do zwiększania jakości obrazów, co pozwala na zachowanie detali nawet na dużych wydrukach.
+    \item \textbf{Poprawa kolorów:} Korekcja i wzmocnienie kolorów, aby obrazy były bardziej wyraźne i zbliżone do oryginału.
+\end{itemize}
+
+\subsubsection*{Korzyści i Zastosowania}
+
+\begin{itemize}
+    \item \textbf{Zachowanie historii:} Poprawa jakości starych obrazów pomaga w zachowaniu dziedzictwa kulturowego i historycznego dla przyszłych pokoleń.
+    \item \textbf{Wystawy i publikacje:} Wyraźniejsze i bardziej szczegółowe obrazy mogą być używane w muzeach, galeriach oraz publikacjach, co zwiększa ich dostępność i wartość edukacyjną.
+    \item \textbf{Digitalizacja zasobów:} Poprawa jakości obrazów jest kluczowa w procesie digitalizacji zasobów kulturowych, umożliwiając ich łatwiejsze przechowywanie i udostępnianie.
+\end{itemize}
+
+\section*{Podsumowanie}
+
+W niniejszym opracowaniu teoretycznym omówiliśmy kluczowe metody oraz zastosowania algorytmów poprawy jakości obrazów. Rozpoczęliśmy od przedstawienia podstawowych technik, takich jak interpolacja, zwiększanie ostrości i redukcja szumów, które są fundamentem zaawansowanych metod przetwarzania obrazów.
+
+Następnie przeanalizowaliśmy zaawansowane techniki uczenia maszynowego, które zrewolucjonizowały dziedzinę super-rozdzielczości. Omówiliśmy szereg nowoczesnych algorytmów, takich jak VDSR, EDSR, , DBPN i RDN, które wykorzystują głębokie sieci neuronowe do skutecznej poprawy jakości obrazów. Każdy z tych algorytmów posiada unikalne cechy i zastosowania, co czyni je efektywnymi w różnych kontekstach.
+
+Szczegółowo opisaliśmy również metryki oceny jakości obrazu, takie jak PSNR, SSIM i MAE, które umożliwiają obiektywną ocenę skuteczności poszczególnych metod. Te metryki pozwalają na dokładne porównanie wyników generowanych przez różne algorytmy, co jest kluczowe dla wyboru odpowiednich narzędzi w praktycznych zastosowaniach.
+
+W dalszej części dokumentu przedstawiliśmy propozycje eksperymentów mających na celu porównanie i ocenę różnych metod poprawy jakości obrazów. Eksperymenty te obejmują porównanie jakości obrazów, analizę wydajności obliczeniowej oraz testy na rzeczywistych obrazach, co pozwoli na kompleksową ocenę możliwości i ograniczeń poszczególnych algorytmów.
+
+W końcowej części skupiliśmy się na analizie zastosowań algorytmów poprawy jakości obrazów w różnych dziedzinach, takich jak gry komputerowe (Nvidia DLSS), analiza obrazów satelitarnych, diagnostyka medyczna, analiza obrazów CCTV oraz zachowanie dziedzictwa kulturowego. Każde z tych zastosowań ilustruje, jak zaawansowane techniki przetwarzania obrazów mogą przyczynić się do poprawy jakości życia i efektywności w różnych sektorach.
+
+Podsumowując, algorytmy poprawy jakości obrazów mają ogromny potencjał do zastosowań w wielu dziedzinach, a ciągłe badania i rozwój w tej dziedzinie będą prowadzić do jeszcze bardziej zaawansowanych i efektywnych rozwiązań. Dzięki zaawansowanym technikom uczenia maszynowego i głębokim sieciom neuronowym, przyszłość przetwarzania obrazów rysuje się bardzo obiecująco, przynosząc korzyści zarówno naukowe, jak i praktyczne.
+
+\section*{Bibliografia}
+\begin{thebibliography}{10}
+
+    \bibitem{ledig2017photo}
+    C. Ledig, L. Theis, F. Huszár, J. Caballero, A. Cunningham, A. Acosta, A. Aitken, A. Tejani, J. Totz, Z. Wang, W. Shi, ``Photo-Realistic Single Image Super-Resolution Using a Generative Adversarial Network,'' in \textit{IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, 2017. [Online]. Available: \url{https://arxiv.org/abs/1609.04802}
+    
+    \bibitem{dong2014learning}
+    C. Dong, C.C. Loy, K. He, X. Tang, ``Learning a Deep Convolutional Network for Image Super-Resolution,'' in \textit{European Conference on Computer Vision (ECCV)}, 2014. [Online]. Available: \url{https://arxiv.org/abs/1501.00092}
+    
+    \bibitem{kim2016accurate}
+    J. Kim, J.K. Lee, K.M. Lee, ``Accurate Image Super-Resolution Using Very Deep Convolutional Networks,'' in \textit{IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, 2016. [Online]. Available: \url{https://arxiv.org/abs/1511.04587}
+    
+    \bibitem{lim2017enhanced}
+    B. Lim, S. Son, H. Kim, S. Nah, K.M. Lee, ``Enhanced Deep Residual Networks for Single Image Super-Resolution,'' in \textit{IEEE Conference on Computer Vision and Pattern Recognition Workshops (CVPRW)}, 2017. [Online]. Available: \url{https://arxiv.org/abs/1707.02921}
+    
+    \bibitem{haris2018deep}
+    M. Haris, G. Shakhnarovich, N. Ukita, ``Deep Back-Projection Networks for Super-Resolution,'' in \textit{IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, 2018. [Online]. Available: \url{https://arxiv.org/abs/1904.05677}
+    
+    \bibitem{zhang2018residual}
+    Y. Zhang, Y. Tian, Y. Kong, B. Zhong, Y. Fu, ``Residual Dense Network for Image Super-Resolution,'' in \textit{IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, 2018. [Online]. Available: \url{https://arxiv.org/abs/1802.08797}
+    
+    \bibitem{wang2018e}
+    X. Wang, K. Yu, S. Wu, J. Gu, Y. Liu, C. Dong, C.C. Loy, Y. Qiao, X. Tang, ``E: Enhanced Super-Resolution Generative Adversarial Networks,'' in \textit{European Conference on Computer Vision Workshops (ECCVW)}, 2018. [Online]. Available: \url{https://arxiv.org/abs/1809.00219}
+    
+    \bibitem{lai2017deep}
+    W.S. Lai, J.B. Huang, N. Ahuja, M.H. Yang, ``Deep Laplacian Pyramid Networks for Fast and Accurate Super-Resolution,'' in \textit{IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, 2017. [Online]. Available: \url{https://arxiv.org/abs/1704.03915}
+    
+    \bibitem{shi2016real}
+    W. Shi, J. Caballero, F. Huszár, J. Totz, A.P. Aitken, R. Bishop, D. Rueckert, Z. Wang, ``Real-Time Single Image and Video Super-Resolution Using an Efficient Sub-Pixel Convolutional Neural Network,'' in \textit{IEEE Conference on Computer Vision and Pattern Recognition (CVPR)}, 2016. [Online]. Available: \url{https://arxiv.org/abs/1609.05158}
+    
+    \bibitem{yang2019deep}
+    W. Yang, X. Zhang, Y. Tian, W. Wang, J. Xue, Q. Liao, ``Deep Learning for Single Image Super-Resolution: A Brief Review,'' in \textit{IEEE Transactions on Multimedia}, vol. 21, no. 12, pp. 3106-3121, 2019. [Online]. Available: \url{https://arxiv.org/abs/1808.03344}
+    
+    \end{thebibliography}
+    
+\end{document}

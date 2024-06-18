@@ -1,0 +1,263 @@
+\documentclass{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{polski}
+\usepackage[polish]{babel}
+\usepackage{graphicx}
+\usepackage{listings}
+\usepackage{color}
+\usepackage{url}
+
+\definecolor{mygreen}{rgb}{0,0.6,0}
+\definecolor{mygray}{rgb}{0.5,0.5,0.5}
+\definecolor{mymauve}{rgb}{0.58,0,0.82}
+
+\lstset{
+    backgroundcolor=\color{white},
+    basicstyle=\ttfamily\footnotesize,
+    breakatwhitespace=false,
+    breaklines=true,
+    captionpos=b,
+    commentstyle=\color{mygreen},
+    extendedchars=true,
+    keywordstyle=\color{blue},
+    stringstyle=\color{mymauve},
+    tabsize=4
+}
+
+\begin{document}
+
+\title{Metody Obliczeniowe w Nauce i Technice}
+\author{Maciej Grzybacz}
+\date{11.05.2024}
+\maketitle
+
+\section*{Zadanie 1}
+Dany jest układ równań liniowych \(Ax=b\).
+
+\noindent Macierz \(A\) o wymiarze \(n \times n\) jest określona wzorem:
+\[
+A = \begin{bmatrix}
+1 & \frac{1}{2} & 0 & \cdots & 0 \\
+\frac{1}{2} & 2 & \frac{1}{3} & \ddots & \vdots \\
+0 & \frac{1}{3} & 2 & \ddots & 0 \\
+\vdots & \ddots & \ddots & \ddots & \frac{1}{n} \\
+0 & \cdots & 0 & \frac{1}{n} & 1
+\end{bmatrix}
+\]
+
+\noindent Przyjmij wektor \(x\) jako dowolną \(n\)-elementową permutację ze zbioru \{-1, 0\} i oblicz wektor \(b\) (operując na wartościach wymiernych).
+
+\noindent Metoda Jacobiego oraz metoda Czebyszewa rozwiązują układ równań liniowych \(Ax=b\) (przyjmując jako niewiadomą wektor \(x\)).
+\\\\
+\noindent W obu przypadkach oszacuj liczbę iteracji przyjmując test stopu:
+\[
+\|x^{(i+1)} - x^{(i)}\| < \rho
+\]
+\[
+\frac{\|Ax^{(i+1)} - b\|}{\|b\|} < \rho
+\]
+gdzie \(\rho\) jest zadana tolerancja.
+
+\section*{Zadanie 2}
+
+Dowieść, że proces iteracji dla układu równań:
+\begin{align*}
+10x_1 - x_2 + 2x_3 - 3x_4 &= 0 \\
+x_1 + 10x_2 - x_3 + 2x_4 &= 5 \\
+2x_1 + 3x_2 + 20x_3 - x_4 &= -10 \\
+3x_1 + 2x_2 + x_3 + 20x_4 &= 15
+\end{align*}
+jest zbieżny. Ile iteracji należy wykonać, aby znaleźć pierwiastki układu z dokładnością do \(10^{-3}\), \(10^{-4}\), \(10^{-5}\)?
+
+\section*{Rozwiązania}
+
+\section*{Zadanie 1}
+
+Rozważamy macierz $A \in \mathbb{R}^{n \times n}$, gdzie:
+\[
+A = \begin{bmatrix}
+1 & \frac{1}{2} & 0 & \dots & 0 \\
+\frac{1}{2} & 2 & \frac{1}{3} & \dots & 0 \\
+0 & \frac{1}{3} & 2 & \ddots & \vdots \\
+\vdots & \vdots & \ddots & \ddots & \frac{1}{n} \\
+0 & 0 & \dots & \frac{1}{n} & 1
+\end{bmatrix}
+\]
+
+\noindent Niech $x$ będzie wektorem, którego elementy są dowolną permutacją zbioru $\{-1, 0\}$. Wektor $b$ jest obliczany jako $b = Ax$.
+
+\subsection*{Metoda Jacobiego}
+
+Algorytm metody Jacobiego dla układu równań liniowych jest następujący:
+\begin{enumerate}
+  \item Inicjalizacja $x^{(0)}$, typowo $x^{(0)} = \mathbf{0}$.
+  \item Iteracyjne obliczanie nowych przybliżeń wektora $x$:
+  \[
+  x^{(i+1)} = D^{-1}(b - (L + U)x^{(i)})
+  \]
+  gdzie:
+  \begin{itemize}
+    \item $D$ jest macierzą diagonalną macierzy $A$,
+    \item $L$ i $U$ to odpowiednio dolna i górna macierz trójkątna macierzy $A$ bez elementów diagonalnych.
+  \end{itemize}
+  \item Iteracje kontynuujemy do momentu, aż $\|x^{(i+1)} - x^{(i)}\| < \rho$, gdzie $\rho$ jest z góry ustaloną tolerancją.
+\end{enumerate}
+
+\subsection*{Metoda Czebyszewa}
+
+Metoda Czebyszewa wykorzystuje wielomiany Czebyszewa do przyspieszenia zbieżności iteracji. Proces iteracyjny wygląda następująco:
+\begin{enumerate}
+  \item Inicjalizacja dwóch pierwszych przybliżeń $x^{(0)}$ i $x^{(1)}$, gdzie $x^{(1)} \neq x^{(0)}$.
+  \item Iteracyjne obliczanie kolejnych przybliżeń z wykorzystaniem wielomianów Czebyszewa:
+  \[
+  x^{(k+1)} = x^{(k)} + \alpha_k (x^{(k)} - x^{(k-1)}) + \beta_k D^{-1}(b - Ax^{(k)})
+  \]
+  \item Parametry $\alpha_k$ i $\beta_k$ są wybierane w taki sposób, aby optymalizować zbieżność metody.
+  \item Iteracje są kontynuowane do osiągnięcia wymaganej dokładności, analogicznie do metody Jacobiego.
+\end{enumerate}
+
+\subsection*{Szacowana liczba iteracji}
+
+\subsubsection*{Wyznaczenie promienia spektralnego}
+Promień spektralny macierzy \( A \) został wyznaczony na podstawie obliczeń numerycznych dla różnych rozmiarów \( n \). Wyniki pokazują, że wartość ta stabilizuje się w okolicach 2.4947. Dla różnych wartości \( n \) promień spektralny prezentuje się następująco:
+\begin{itemize}
+    \item Dla \( n = 10 \) wynosi około 2.494690817,
+    \item Dla \( n = 50 \) wynosi około 2.494690839,
+    \item Dla \( n = 100 \) wynosi około 2.494690839,
+    \item Dla \( n = 500 \) wynosi około 2.494690839,
+    \item Dla \( n = 1000 \) wynosi około 2.494690839.
+\end{itemize}
+\subsubsection*{Kod Python}
+Poniżej znajduje się kod Python użyty do obliczeń promienia spektralnego dla różnych rozmiarów macierzy \( A \):
+
+\begin{lstlisting}[language=Python]
+import numpy as np
+
+def create_matrix_A_large(n):
+    A = np.zeros((n, n))
+    for i in range(n):
+        if i == 0 or i == n - 1:
+            A[i, i] = 1
+        else:
+            A[i, i] = 2
+        if i < n - 1:
+            A[i, i + 1] = 1 / (i + 2)
+            A[i + 1, i] = 1 / (i + 2)
+    return A
+
+n_values = [10, 50, 100, 500, 1000]
+lambda_max_values = []
+
+for n in n_values:
+    A = create_matrix_A_large(n)
+    eigenvalues = np.linalg.eigvals(A)
+    lambda_max = np.max(np.abs(eigenvalues))
+    lambda_max_values.append(lambda_max)
+
+n_values, lambda_max_values
+\end{lstlisting}
+\newpage
+\subsubsection*{Oszacowanie liczby iteracji}
+Liczba iteracji w metodach Jacobiego i Czebyszewa może być oszacowana przy użyciu poniższej formuły:
+\[
+k \approx \frac{\log\left(\frac{1}{\rho}\right)}{\log(\lambda)}
+\]
+gdzie \( \rho \) to tolerancja błędu, a \( \lambda \) to obliczony promień spektralny macierzy iteracji, wynoszący około 2.4947.
+
+Dla różnych poziomów dokładności obliczone liczby iteracji są następujące:
+\begin{itemize}
+    \item Dla \( \rho = 10^{-3} \) potrzeba około 8 iteracji,
+    \item Dla \( \rho = 10^{-4} \) potrzeba około 11 iteracji,
+    \item Dla \( \rho = 10^{-5} \) potrzeba około 13 iteracji.
+\end{itemize}
+
+\section*{Zadanie 2}
+
+Rozważamy układ równań:
+\begin{align*}
+10x_1 - x_2 + 2x_3 - 3x_4 &= 0 \\
+x_1 + 10x_2 - x_3 + 2x_4 &= 5 \\
+2x_1 + 3x_2 + 20x_3 - x_4 &= -10 \\
+3x_1 + 2x_2 + x_3 + 20x_4 &= 15
+\end{align*}
+
+\subsection*{Sprawdzenie zbieżności metody iteracji}
+Aby stwierdzić zbieżność metody iteracyjnej takiej jak metoda Jacobiego, musimy sprawdzić, czy macierz systemu jest diagonalnie dominująca. Dla każdego wiersza, element diagonalny musi być większy niż suma wartości bezwzględnych pozostałych elementów w danym wierszu.
+
+Macierz współczynników $A$ układu równań jest następująca:
+\[
+A = \begin{bmatrix}
+10 & -1 & 2 & -3 \\
+1 & 10 & -1 & 2 \\
+2 & 3 & 20 & -1 \\
+3 & 2 & 1 & 20
+\end{bmatrix}
+\]
+
+Sprawdzając warunek dominacji diagonalnej:
+\begin{itemize}
+  \item Pierwszy wiersz: $|10| > |-1| + |2| + |-3|$ czyli $10 > 6$ - spełnione.
+  \item Drugi wiersz: $|10| > |1| + |-1| + |2|$ czyli $10 > 4$ - spełnione.
+  \item Trzeci wiersz: $|20| > |2| + |3| + |-1|$ czyli $20 > 6$ - spełnione.
+  \item Czwarty wiersz: $|20| > |3| + |2| + |1|$ czyli $20 > 6$ - spełnione.
+\end{itemize}
+
+Ponieważ każdy wiersz spełnia warunek dominacji diagonalnej, metoda Jacobiego jest zbieżna dla tego układu równań.
+
+\subsection*{Obliczenie współczynnika zbieżności \( q \)}
+Wartość współczynnika zbieżności \( q \), czyli promień spektralny macierzy iteracji \( I - D^{-1}A \), została obliczona za pomocą skryptu w języku Python z użyciem biblioteki NumPy. Macierz iteracji \( B \) jest definiowana jako:
+\[
+B = I - D^{-1}A
+\]
+gdzie \( I \) jest macierzą jednostkową, a \( D^{-1} \) jest macierzą odwrotną do macierzy diagonalnej \( D \), która zawiera diagonalne elementy macierzy \( A \).
+
+Oto fragment kodu Python, który oblicza wartość \( q \):
+\begin{verbatim}
+import numpy as np
+A = np.array([[10, -1, 2, -3], 
+              [1, 10, -1, 2], 
+              [2, 3, 20, -1], 
+              [3, 2, 1, 20]])
+D = np.diag(np.diag(A))
+D_inv = np.linalg.inv(D)
+I = np.eye(4)
+B = I - np.dot(D_inv, A)
+eigenvalues = np.linalg.eigvals(B)
+q = max(abs(eigenvalues))
+\end{verbatim}
+
+Wartość \( q \) obliczona za pomocą powyższego kodu wynosi \( q \approx 0.953 \).
+
+\subsection*{Estymacja liczby iteracji}
+Liczba iteracji potrzebna do osiągnięcia zadanej dokładności zależy od współczynnika zbieżności \( q \), gdzie \( q \) jest największą wartością własną macierzy iteracji \( I - D^{-1}A \). Dokładność iteracji można estymować za pomocą:
+\[
+\|x^{(k)} - x^*\| \leq q^k \|x^{(0)} - x^*\|
+\]
+gdzie \( x^* \) jest dokładnym rozwiązaniem.
+
+Dla zadanych poziomów dokładności \(\epsilon = 10^{-3}\), \(\epsilon = 10^{-4}\), \(\epsilon = 10^{-5}\) liczba iteracji \( k \) może być szacowana jako:
+\[
+k \approx \frac{\log(\epsilon)}{\log(q)}
+\]
+\newpage
+\textbf{Wyniki:}
+\begin{itemize}
+    \item Dla \( \epsilon = 10^{-3} \):
+    \[
+    k \approx \frac{\log(10^{-3})}{\log(0.953)} \approx 143
+    \]
+    \item Dla \( \epsilon = 10^{-4} \):
+    \[
+    k \approx \frac{\log(10^{-4})}{\log(0.953)} \approx 191
+    \]
+    \item Dla \( \epsilon = 10^{-5} \):
+    \[
+    k \approx \frac{\log(10^{-5})}{\log(0.953)} \approx 238
+    \]
+\end{itemize}
+
+\end{document}

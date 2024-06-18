@@ -1,0 +1,410 @@
+\documentclass[10pt]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[polish]{babel}
+\usepackage{amsmath}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage[version=4]{mhchem}
+\usepackage{stmaryrd}
+\usepackage{hyperref}
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue,
+    filecolor=magenta,
+    urlcolor=cyan,
+}
+\urlstyle{same}
+\usepackage{graphicx}
+\usepackage[export]{adjustbox}
+\usepackage{changepage}
+\graphicspath{ {./images/} }
+
+\title{Laboratorium 5 \\ Całkowanie numeryczne}
+\author{Maciej Grzybacz}
+\date{14.04.2024}
+
+\begin{document}
+\maketitle
+
+\section*{Zadania}
+
+\begin{enumerate}
+    \item Obliczyć całkę 
+    \[
+    I = \int_0^1 \frac{1}{1+x} \, dx
+    \]
+    korzystając z:
+    \begin{itemize}
+        \item wzoru prostokątów,
+        \item wzoru trapezów,
+        \item wzoru Simpsona (zwykłego i złożonego dla \( n=3, 5 \)).
+    \end{itemize}
+    Porównać wyniki i błędy.
+
+    \item Obliczyć całkę 
+    \[
+    I = \int_{-1}^1 \frac{1}{1+x^2} \, dx
+    \]
+    korzystając z wielomianów ortogonalnych (np. Czebyszewa) dla \( n=8 \).
+
+    \section*{Zadania domowe}
+
+    \item Obliczyć całkę 
+    \[
+    \int_0^1 \frac{1}{1+x^2} \, dx
+    \]
+    korzystając z:
+    \begin{itemize}
+        \item wzoru prostokątów dla \( h=0.1 \),
+        \item metody całkowania adaptacyjnego.
+    \end{itemize}
+
+    \item Metodą Gaussa obliczyć całkę 
+    \[
+    \int_0^1 \frac{1}{x+3} \, dx
+    \]
+    dla \( n=4 \). Oszacować resztę kwadratury.
+\end{enumerate}
+
+\section*{Rozwiązania}
+\begin{enumerate}
+  \item Zadanie 1
+
+    Obliczamy całkę:
+    \[
+    I = \int_0^1 \frac{1}{1+x} \, dx
+    \]
+    używając metod prostokątów, trapezów oraz Simpsona, jako kryterium zakończenia obliczeń przyjmując dokładność $10^{-6}$. Do tego celu wykorzystujemy program w języku Python. \\
+
+
+  Wyniki działania programu:
+
+  \begin{itemize}
+    \item Dokładna wartość: wynik = 0.6931471805599453, błąd = 0.0 
+    \item Metoda prostokątów: wynik = 0.6931470613507552, liczba przedziałów = 512, błąd = 1.1920919007479824e-07 
+    \item Metoda trapezów: wynik = 0.6931474189784107, liczba przedziałów = 512, błąd = 2.3841846541472478e-07 
+    \item Metoda Simpsona: wynik = 0.6931476528194189, liczba przedziałów = 16, błąd = 4.7225947363838117e-07
+    \item Złożona metoda Simpsona: wynik = 0.6931476528194189, liczba przedziałów = 16, błąd = 4.7225947363838117e-07 
+\end{itemize}
+    Wnioski:
+
+    Metody numeryczne całkowania wykazują różne poziomy dokładności przy obliczaniu zadanej całki. 
+    Metoda Simpsona, zarówno w wersji zwykłej, jak i złożonej, oferują dobrą dokładność w stosunku do liczby przedziałów \( n \). 
+    Metody prostokątów i trapezów wymagają znacznie więcej iteracji do osiągnięcia porównywalnej dokładności.
+\newpage
+\item Zadanie 2
+
+Obliczamy całkę:
+\[
+I = \int_{-1}^1 \frac{1}{1+x^2} \, dx
+\]
+korzystając z wielomianów Czebyszewa dla \( n=8 \). Podobnie jak w poprzednim zadaniu, do obliczeń wykorzystujemy program w języku Python.
+
+Wynik działania programu:
+
+\begin{itemize}
+    \item Dokładna wartość całki:  3.141592653589793
+    \item Przybliżenie kwadraturą Gaussa-Czebyszewa:  2.221438132867653\\
+    Błąd:  0.9201545207221402
+\end{itemize}
+
+Wnioski:
+
+Niezgodność wyników może wynikać z nieadekwatności metody dla danej funkcji podcałkowej bez odpowiedniej normalizacji. 
+Do obliczeń ogólniejszych typów funkcji bardziej odpowiednia mogłaby być metoda Gaussa-Legendre’a.
+\end{enumerate}
+
+\section*{Zadania domowe}
+\begin{enumerate}
+\item Zadanie 1
+
+Aby obliczyć całkę z funkcji \( f(x) = \frac{1}{1 + x^2} \) na przedziale od 0 do 1, użyjemy dwóch metod numerycznych: metody prostokątów z krokiem \( h = 0.1 \) i metody całkowania adaptacyjnego.
+Do obliczenia wyników posłużymy się programem w języku Python. \\
+
+Wynik działania programu:
+\begin{itemize}
+    \item  Dokładna wartość całki:  0.7853981633974483
+    \item Wynik metody prostokątów:  0.8099814972267897 \\
+    Błąd metody prostokątów:  0.024583333829341414
+    \item Wynik adaptacyjnej metody kwadratowej:  0.7853979243100544 \\
+    Błąd adaptacyjnej metody kwadratowej:  2.3908739388289746e-07
+\end{itemize}
+
+Wnioski:
+
+Wyniki są zbliżone, ale metoda adaptacyjna jest bardziej dokładna, co jest zgodne z oczekiwaniami.
+\newpage
+\item Zadanie 2
+
+Do obliczenia całki $\int_{0}^{1} \frac{1}{x+3} \, dx$ metodą Gaussa dla $n=4$, wykorzystamy kwadraturę Gaussa-Legendre'a. 
+W metodzie Gaussa-Legendre'a, całka funkcji na przedziale $[-1,1]$ jest przybliżana za pomocą sumy ważonej wartości funkcji w specjalnie dobranych punktach i współczynników. 
+Podobnie jak w poprzednich zadaniach, do obliczeń wykorzystamy program w języku Python.
+
+Wynik działania programu:
+\begin{itemize}
+\item Dokładna wartość całki:  0.28768207245178085
+\item Przybliżona wartość całki Gaussa:  0.2876820721506314 \\
+Bład metody Gaussa:  3.011494387195057e-10
+\end{itemize}
+
+Oszacowanie reszty kwadratury:
+
+Oszacowanie błędu kwadratury opiera się na \(8\)-mej pochodnej funkcji \(f(x)\), którą obliczamy w punkcie \(x = 0.5\) w oryginalnym przedziale:
+\[
+f^{(8)}(x) = \frac{(-1)^8 \cdot 8!}{(x+3)^{9}}
+\]
+Resztę kwadratury można oszacować jako:
+\[
+E_n \approx \frac{(b-a)^{2n+1} \cdot (n!)^4}{((2n)!)^3 \cdot (2n+1)} \cdot f^{(2n)}(\xi)
+\]
+gdzie \(\xi\) to punkt w przedziale \([0,1]\), który przyjmujemy jako \(0.5\).
+Po podstawieniu wartości otrzymujemy wartość błędu: \(2.98 \times 10^{-10}\)
+
+Wnioski:
+
+Wynik całkowania metodą Gaussa jest bardzo zbliżony do dokładnej wartości całki, a reszta kwadratury jest bardzo mała, co potwierdza wysoką dokładność metody Gaussa-Legendre'a.
+
+\end{enumerate}
+\newpage
+\section*{Rozwiązania w Pythonie}
+\begin{adjustwidth}{-1.5cm}{-1.5cm}
+\begin{enumerate} 
+\item Kod do zadania 1:
+\begin{verbatim}
+import numpy as np  
+
+def f(x):  
+    return 1 / (1 + x)  
+    
+# Zwraca wartość logarytmu naturalnego z 2, co jest dokładnym wynikiem całki    
+def exact_integral():  
+    return np.log(2)  
+    
+# Metoda prostokątów
+def rectangle_method(a, b, epsilon): 
+    n = 1  
+    previous_result = 0  
+    current_result = (b - a) * f(a) 
+    # Pętla wykonująca obliczenia, dopóki różnica między obecnym a poprzednim
+    # wynikiem jest większa niż zadana dokładność
+    while np.abs(current_result - previous_result) > epsilon: 
+        # Podwajanie liczby przedziałów 
+        n *= 2  
+        # Nowa długość przedziału
+        h = (b - a) / n  
+        # Punkty wewnątrz przedziałów
+        x = np.linspace(a, b, n+1)  
+        previous_result = current_result  
+        current_result = h * np.sum(f(x[:-1])) 
+    # Zwraca obliczony wynik oraz liczbę przedziałów 
+    return current_result, n  
+    
+# Metoda trapezów
+def trapezoid_method(a, b, epsilon):  
+    n = 1
+    previous_result = (f(a) + f(b)) * (b - a) / 2 
+    current_result = 0  
+    # Pętla wykonująca obliczenia, dopóki różnica między obecnym a poprzednim
+    # wynikiem jest większa niż zadana dokładność
+    while np.abs(current_result - previous_result) > epsilon:
+        # Podwajanie liczby przedziałów
+        n *= 2  
+        # Nowa długość przedziału
+        h = (b - a) / n 
+        # Punkty wewnątrz przedziałów
+        x = np.linspace(a + h, b - h, n - 1)  
+        previous_result = current_result  
+        current_result = h * (f(a)/2 + np.sum(f(x)) + f(b)/2)
+    # Zwraca obliczony wynik oraz liczbę przedziałów 
+    return current_result, n 
+    
+# Metoda Simpsona
+def simpson_method(a, b, epsilon):  
+    # Liczba przedziałów nusi być parzysta
+    n = 2  
+    previous_result = 0 
+    current_result = (b - a) / 6 * (f(a) + 4*f((a+b)/2) + f(b)) 
+    # Pętla wykonująca obliczenia, dopóki różnica między obecnym a poprzednim
+    # wynikiem jest większa niż zadana dokładność
+    while np.abs(current_result - previous_result) > epsilon:  
+        # Podwajanie liczby przedziałów
+        n *= 2  
+        # Nowa długość przedziału
+        h = (b - a) / n  
+        # Punkty wewnątrz przedziałów
+        x = np.linspace(a, b, n + 1) 
+        current_result = h / 3 * (f(x[0]) + 4 * np.sum(f(x[1:-1:2])) + 
+            2 * np.sum(f(x[2:-2:2])) + f(x[-1]))
+        previous_result = current_result  
+    # Zwraca obliczony wynik oraz liczbę przedziałów
+    return current_result, n 
+    
+# Podstawowa metoda Simpsona, dla konkretnej liczby przedziałów
+def basic_simpson_method(a, b, n):  
+    if n % 2 != 0:  
+        raise ValueError("Liczba przedziałów musi być parzysta.")
+    h = (b - a) / n 
+    x = np.linspace(a, b, n+1) 
+    y = f(x)  
+    integral = h / 3 * (y[0] + y[-1] + 4 * np.sum(y[1:n:2]) + 
+        2 * np.sum(y[2:n-1:2]))  
+    return integral 
+
+# Złożona metoda Simpsona
+def composite_simpson_method(a, b, epsilon): 
+    # Liczba przedziałów musi być parzysta
+    n = 2  
+    current_result = basic_simpson_method(a, b, n)  
+    while True:
+        n *= 2  
+        new_result = basic_simpson_method(a, b, n)  
+        # Przerwanie pętli, jeśli różnica między obecnym a poprzednim 
+        # wynikiem jest mniejsza niż epsilon
+        if np.abs(new_result - current_result) < epsilon:  
+            break  
+        current_result = new_result 
+    # Zwraca obliczony wynik oraz liczbę przedziałów
+    return current_result, n  
+    
+epsilon = 1e-6  # Pożądana dokładność
+exact_value = exact_integral()  
+results = { 
+    'Dokładna wartość': exact_value,
+    'Metoda prostokątów': rectangle_method(0, 1, epsilon),
+    'Metoda trapezów': trapezoid_method(0, 1, epsilon),
+    'Metoda Simpsona': simpson_method(0, 1, epsilon),
+    'Złożona metoda Simpsona': composite_simpson_method(0, 1, epsilon)
+}
+for method, result in results.items():  
+    if isinstance(result, tuple):  
+        print(f"{method}: wynik = {result[0]}, liczba przedziałów = {result[1]},
+            błąd = {np.abs(result[0] - exact_value)}")  
+    else: 
+        print(f"{method}: wynik = {result}, 
+            błąd = {np.abs(result - exact_value)}") 
+
+
+\end{verbatim}
+\newpage
+\item Kod do zadania 2:
+
+\begin{verbatim}
+import numpy as np
+
+def f(x):
+    return 1 / (1 + x**2) 
+
+# Metoda Gaussa-Czebyszewa
+def gauss_chebyshev_quadrature(n):  
+    # Tworzenie tablicy wartości od 1 do n
+    i = np.arange(1, n+1)  
+    # Węzły Czebyszewa
+    x_i = np.cos(np.pi * (2*i - 1) / (2*n))  
+    # Wagi Czebyszewa
+    w_i = np.pi / n  
+    # Obliczenie przybliżonej wartości całki
+    integral_approx = w_i * np.sum(f(x_i))  
+    return integral_approx 
+
+n = 8  
+integral_approx = gauss_chebyshev_quadrature(n)  
+exact_value = np.pi  
+error = np.abs(integral_approx - exact_value) 
+print("Dokładna wartość całki: ", exact_value)  
+print("Przybliżenie kwadraturą Gaussa-Czebyszewa: ", integral_approx)  
+print("Błąd: ", error)  
+
+\end{verbatim}
+
+\item Kod do zadania domowego 1:
+
+\begin{verbatim}
+import numpy as np
+
+# Metoda prostokątów
+def rectangle_method(f, a, b, h):
+    x = np.arange(a, b, h) 
+    return np.sum(f(x) * h)  
+
+# Adaptacyjna kwadratura
+def adaptive_quadrature(f, a, b, epsilon): 
+    # Funkcja rekurencyjna do całkowania adaptacyjnego
+    def integrate(f, a, b, epsilon, whole):  
+        # Środek przedziału
+        c = (a + b) / 2  
+        # Całka na lewej połowie przedziału
+        left = np.trapz([f(a), f(c)], [a, c])  
+        # Całka na prawej połowie przedziału
+        right = np.trapz([f(c), f(b)], [c, b])  
+        # Sprawdzenie warunku stopu
+        if np.abs(left + right - whole) < 15 * epsilon:  
+            return left + right  
+        else:
+            # Rekurencyjne wywołanie funkcji dla lewej i prawej połowy przedziału
+            return integrate(f, a, c,  epsilon/2, left) + integrate(f, c, b,epsilon/2, right)  
+
+    # Początkowa przybliżona wartość całki
+    initial = np.trapz([f(a), f(b)], [a, b]) 
+    # Wywołanie funkcji całkowania adaptacyjnego 
+    return integrate(f, a, b,  epsilon, initial)  
+
+f = lambda x: 1 / (1 + x**2)  
+a = 0  
+b = 1  
+h = 0.1 
+epsilon = 1e-6  
+
+rectangle_result = rectangle_method(f, a, b, h) 
+adaptive_result = adaptive_quadrature(f, a, b, epsilon)
+print("Dokładna wartość całki: ", np.arctan(1)) 
+print("Wynik metody prostokątów: ", rectangle_result) 
+print("Błąd metody prostokątów: ", np.abs(rectangle_result - np.arctan(1)))
+print("Wynik adaptacyjnej metody kwadratowej: ", adaptive_result) 
+print("Błąd adaptacyjnej metody kwadratowej: ", np.abs(adaptive_result - np.arctan(1)))
+
+\end{verbatim}
+\newpage
+\item Kod do zadania domowego 2:
+
+\begin{verbatim}
+import numpy as np
+
+def gauss_integral():
+    # Węzły i wagi dla kwadratury Gaussa-Legendre'a
+    nodes = [-0.8611363115940526,-0.3399810435848563, 
+            0.3399810435848563, 0.8611363115940526]
+    weights = [0.3478548451374538, 0.6521451548625461,
+            0.6521451548625461, 0.3478548451374538]
+    
+    # Funkcja transformująca przedział [-1, 1] na [0, 1]
+    def transform(x):
+        return (x + 1) / 2
+    
+    # Dostosowanie węzłów i wag do przedziału [0, 1]
+    transformed_nodes = [transform(node) for node in nodes]
+    adjusted_weights = [weight / 2 for weight in weights]
+    
+    def f(x):
+        return 1 / (x + 3)
+    
+    gauss_integral_value = sum(adjusted_weights[i] * 
+        f(transformed_nodes[i]) for i in range(4))
+    
+    return gauss_integral_value
+    
+def exact_integral():
+    exact_value = np.log(4/3)
+    return exact_value
+    
+approximation = gauss_integral()
+exact_value = exact_integral()
+    
+print("Dokładna wartość całki: ", exact_value)
+print("Przybliżona wartość całki Gaussa: ", approximation)
+print("Bład metody Gaussa: ", abs(approximation-exact_value))
+\end{verbatim}
+
+\end{enumerate}
+\end{adjustwidth}
+\end{document}
